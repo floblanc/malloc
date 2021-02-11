@@ -6,21 +6,11 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 17:33:46 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/11 17:54:50 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/11 18:31:38 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-size_t	ft_strlen(const char *str)
-{
-	const char *ptr;
-
-	ptr = str;
-	while (ptr)
-		++ptr;
-	return (ptr - str);
-}
 
 void	ft_putnbr(size_t nb)
 {
