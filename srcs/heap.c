@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/11 18:10:45 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/12 12:18:03 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,24 @@ t_heap	*create_heap(size_t size)
 	heap->block = NULL;
 	heap->next = NULL;
 	return (heap);
+}
+
+t_heap		*find_memory(void *allocation)
+{
+	t_heap	*tmp_heap;
+	t_block	*tmp_block;
+
+	tmp_heap = g_heap;
+	while (tmp_heap)
+	{
+		tmp_block = tmp_heap->block;
+		while (tmp_block)
+		{
+			if ((void*)(tmp_block + sizeof(t_block)) == allocation)
+				return (tmp_heap);
+			tmp_block = tmp_block->next;
+		}
+		tmp_heap = tmp_heap->next;
+	}
+	return (NULL);
 }
