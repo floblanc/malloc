@@ -6,9 +6,9 @@ endif
 NAME				=	libft_malloc.so
 
 # Compilation mode
-WALL				=	no
-WEXTRA				=	no
-WERROR				=	no
+WALL				=	yes
+WEXTRA				=	yes
+WERROR				=	yes
 WEVERYTHING			=	no
 
 FSANITIZE			=	no
@@ -91,11 +91,11 @@ _IGREY				=	$'\033[47m
 
 SRC_NAME =			malloc.c					\
 					free.c						\
-					realloc.c					\
 					show_alloc_mem.c			\
 					heap.c						\
 					utils.c						\
 					block.c						\
+					# realloc.c					\
 
 SRC_PATH =			./srcs/
 

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/12 12:18:03 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:12:28 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_heap	*create_heap(size_t size)
 	size_t		heap_size;
 
 	diff = 0;
-	page_size = getpagesize();
+	page_size = (size_t)getpagesize();
 	heap_size = (size + sizeof(t_block));
 	if (heap_size <= SMALL)
 		heap_size = heap_size * ALLOC + sizeof(t_heap);

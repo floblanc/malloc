@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 17:33:46 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/11 18:31:38 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/15 12:13:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_putnbr(size_t nb)
 
 	if (nb < 10)
 	{
-		c = nb + 48;
+		c = (char)(nb + 48);
 		write(STDOUT_FILENO, &c, 1);
 	}
 	else

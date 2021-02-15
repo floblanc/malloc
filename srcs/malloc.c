@@ -6,13 +6,14 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/12 12:07:59 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:16:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
 pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
+t_heap			*g_heap = NULL;
 
 void	*malloc(size_t size)
 {
@@ -26,10 +27,11 @@ void	*malloc(size_t size)
 	if (!g_heap)
 		g_heap = create_heap(size);
 	heap = g_heap;
+	last = heap;
 	while (!allocation && heap)
 	{
 		if (get_size(size) == heap->size)
-			allocation = add_block(last->next, size);
+			allocation = add_block(heap, size);
 		last = heap;
 		heap = heap->next;
 	}

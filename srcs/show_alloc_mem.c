@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:29:36 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/11 18:02:39 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/15 12:11:51 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-size_t	print_block(t_block *block)
+static	size_t	print_block(t_block *block)
 {
 	write(STDOUT_FILENO, "0x", 3);
 	ft_puthexa((size_t)block + sizeof(t_block));
@@ -23,10 +23,10 @@ size_t	print_block(t_block *block)
 	ft_putnbr(block->size - sizeof(t_block));
 	write(STDOUT_FILENO, " : ", 4);
 	write(STDOUT_FILENO, " octets\n", 9);
-	block->size - sizeof(t_block);
+	return (block->size - sizeof(t_block));
 }
 
-size_t	print_mem(t_heap *heap)
+static	size_t	print_mem(t_heap *heap)
 {
 	t_block	*tmp;
 	size_t	size;

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:33:07 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/12 11:14:09 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:32:31 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@
 # include <unistd.h>
 # include <sys/mman.h>
 # include <pthread.h>
+# include <stdbool.h>
 
-# define ALLOC
+# define ALLOC 100
 # define TINY 100
 # define SMALL 4096
 
 typedef struct			s_block{
-	struct s_block		*prev;
 	size_t				size;
-	int					free;
 	struct s_block		*next;
 }						t_block;
 
@@ -34,8 +33,8 @@ typedef struct			s_heap {
 	struct s_heap		*next;
 }						t_heap;
 
-t_heap					*g_heap;
-extern pthread_mutex_t	g_mutex;
+extern	t_heap			*g_heap;
+extern	pthread_mutex_t	g_mutex;
 
 /*
 ** malloc.c
