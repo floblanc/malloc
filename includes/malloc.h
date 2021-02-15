@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:33:07 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 14:32:31 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 16:17:44 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct			s_block{
 	size_t				size;
+	bool				free;
 	struct s_block		*next;
 }						t_block;
 
@@ -81,5 +82,6 @@ void		show_alloc_mem(void);
 size_t		ft_strlen(const char *str);
 void		ft_putnbr(size_t nb);
 void		ft_puthexa(size_t nb);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 12:08:11 by floblanc          #+#    #+#             */
-/*   Updated: 2021/02/15 14:33:19 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 16:27:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static	t_block *create_block(void *addr, size_t block_size, t_block *next)
 
 	block = addr;
 	block->size = block_size;
+	block->free = false;
 	block->next = next;
 	return (block);
 }
@@ -28,19 +29,21 @@ static	t_block	*available_size(t_heap *heap, size_t block_size)
 	t_block	*tmp;
 
 	tmp = NULL;
-	size = sizeof(t_heap);
+	size = (size_t)(heap->block + sizeof(t_heap));
 	if (heap->block)
 	{
 		tmp = heap->block;
 		while (tmp->next)
 		{
+			if (tmp->free && tmp->size >= block_size)
+				return(create_block((void*)size, block_size, tmp->next));
 			size += tmp->size;
 			tmp = tmp->next;
 		}
 		size += tmp->size;
 	}
 	if (heap->size - size >= block_size)
-		return (tmp->next = create_block(heap->block + size, block_size, NULL));
+		return (tmp->next = create_block((void*)size, block_size, NULL));
 	return (NULL);
 }
 

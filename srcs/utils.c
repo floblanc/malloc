@@ -6,11 +6,26 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 17:33:46 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 12:13:06 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/15 16:13:20 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char *str1;
+	unsigned char *str2;
+
+	str1 = (unsigned char *)dest;
+	str2 = (unsigned char *)src;
+	if (!n || dest == src)
+		return (dest);
+	while (n--)
+		*str1++ = *str2++;
+	return (dest);
+}
+
 
 void	ft_putnbr(size_t nb)
 {
