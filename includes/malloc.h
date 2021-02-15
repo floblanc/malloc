@@ -64,6 +64,12 @@ t_heap		*find_memory(void *allocation);
 size_t		get_size(size_t size);
 
 /*
+** block.c
+*/
+
+void		*add_block(t_heap *heap, size_t size);
+
+/*
 ** show_alloc_mem.c
 */
 

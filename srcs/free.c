@@ -14,52 +14,50 @@
 
 static void	remove_heap(t_heap *heap)
 {
-	t_heap	*tmp_heap;
+	t_heap	*free_heap;
 	t_heap *prev_heap;
 
 	prev_heap = NULL;
-	tmp_heap = g_heap;
-	while (tmp_heap != heap)
+	free_heap = g_heap;
+	while (free_heap != heap)
 	{
-		prev_heap = tmp_heap;
-		tmp_heap = tmp_heap->next;
+		prev_heap = free_heap;
+		free_heap = free_heap->next;
 	}
 	if (prev_heap)
-	// if (tmp_bloc->prev)
-	{
-	// (tmp_heap->prev)->next = tmp_heap->next;
-	// (tmp_heap->next)->prev = tmp_heap->prev;
-	}
+		prev_heap->next = free_heap->next;
 	else
-	{
-		g_heap = tmp_heap->next;
-		// if (tmp_heap->next)
-		// 	(tmp_heap->next)->prev = NULL;
-	}
+		g_heap = free_heap->next;
 	munmap((void*)(heap), heap->size);
 }
 
 static void	remove_block(t_heap *heap, void *ptr)
 {
-	t_block	*tmp_block;
+	t_block	*free_block;
 	t_block *prev_block;
+	t_block *actual_block;
 
 	prev_block = NULL;
-	tmp_block = heap->block;
-	while ((void*)(tmp_block + sizeof(t_block)) != ptr)
+	free_block = heap->block;
+	while ((void*)(free_block + sizeof(t_block)) != ptr)
 	{
-		prev_block = tmp_block;
-		tmp_block = tmp_block->next;
+		prev_block = free_block;
+		free_block = free_block->next;
 	}
-	tmp_block->free = 1;
 	if (prev_block)
-		prev_block->next = tmp_block->next;
+		prev_block->next = free_block->next;
 	else
-		heap->block = tmp_block->next;
-	while (prev_block->next && (prev_block->next)->free == 0)
-		prev_block = prev_block->next;
-	tmp_block->next = prev_block->next;
-	prev_block->next = tmp_block;
+		heap->block = free_block->next;
+	// free_block->free = 1;
+	//defrag
+	actual_block = prev_block->next;
+	while (actual_block->next)
+	{
+		actual_block -= free_block->size;
+		prev_block->next = actual_block;
+		prev_block = actual_block;
+		actual_block = actual_block->next;
+	}
 }
 
 void	free(void *ptr)

@@ -12,6 +12,39 @@
 
 #include "../includes/malloc.h"
 
+t_block *create_block(void *addr, size_t block_size)
+{
+	t_block	*block;
+
+	block = addr;
+	block->size = block_size;
+	block->next = NULL;
+	return (block);
+}
+
+t_block	*available_size(t_heap *heap, size_t block_size)
+{
+	size_t	size;
+	t_block	*tmp;
+	t_block	*block;
+
+	tmp = NULL;
+	size = sizeof(t_heap);
+	if (heap->block)
+	{
+		tmp = heap->block;
+		while (tmp->next)
+		{
+			size += tmp->size;
+			tmp = tmp->next;
+		}
+		size += tmp->size;
+	}
+	if (heap->size - size >= block_size)
+		return (tmp->next = create_block(heap->block + size, block_size));
+	return (NULL);
+}
+
 void	*add_block(t_heap *heap, size_t size)
 {
 	t_block	*block;
@@ -24,17 +57,11 @@ void	*add_block(t_heap *heap, size_t size)
 	block->next = NULL;
 	if (heap->block == NULL)
 	{
+		block = heap + sizeof(t_heap);
 		heap->block = block;
 	}
 	else
-	{
-		tmp_block = heap->block;
-		save_block = NULL;
-		available_mem = 0;
-		while (tmp_block)
-		{
-			tmp_block = tmp_block->next;
-		}
-	}
+		block = available_size(size, block->size);
 	return ((void*)block);
+	// return ((void*)block + sizeof(t_block));
 }

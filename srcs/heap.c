@@ -12,7 +12,8 @@
 
 #include "../includes/malloc.h"
 
-size_t get_size(size_t size)
+
+size_t	get_size(size_t size)
 {
 	if (size <= TINY)
 		return (TINY);

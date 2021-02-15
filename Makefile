@@ -95,6 +95,7 @@ SRC_NAME =			malloc.c					\
 					show_alloc_mem.c			\
 					heap.c						\
 					utils.c						\
+					block.c						\
 
 SRC_PATH =			./srcs/
 
