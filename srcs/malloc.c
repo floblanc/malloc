@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 13:31:42 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/16 13:46:53 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	*malloc(size_t size)
 	allocation = NULL;
 	if (!g_heap)
 		g_heap = create_heap(size);
+	if (!g_heap)
+		return (NULL);
 	heap = g_heap;
 	last = heap;
 	while (!allocation && heap)
