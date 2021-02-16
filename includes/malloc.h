@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:33:07 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 12:39:18 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:32:21 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	*realloc(void *ptr, size_t size);
 t_heap		*create_heap(size_t size);
 t_heap		*find_memory(void *allocation);
 size_t		get_size(size_t size);
+size_t		get_heap_size(size_t size);
+
 
 /*
 ** block.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 13:15:01 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:37:06 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,29 @@ size_t	get_size(size_t size)
 	return (size);
 }
 
-t_heap	*create_heap(size_t size)
+size_t	get_heap_size(size_t size)
 {
-	t_heap		*heap;
-	// size_t		real_size;
-	// size_t		page_size;
-	// size_t		new_size;
+	size_t		real_size;
+	size_t		page_size;
+	size_t		new_size;
 
-	// page_size = (size_t)getpagesize();
-	// real_size = get_size(size + sizeof(t_block));
-	// if (real_size <= SMALL)
-	// 	new_size = (size + sizeof(t_block)) * ALLOC + sizeof(t_heap);
-	// else
-	// 	new_size = real_size + sizeof(t_heap);
-	// new_size += new_size % page_size;
-	size_t	new_size;
-	size_t	page_size;
-	size_t	alloc_size;
-
-	page_size = getpagesize();
-	alloc_size = get_size(size + sizeof(t_block));
-	if (size + sizeof(t_block) <= SMALL)
-	{
-		new_size = (ALLOC/ (page_size / alloc_size) + 1) * page_size;
-		if (new_size - ALLOC* alloc_size < sizeof(t_heap))
-			new_size += page_size;
-	}
+	page_size = (size_t)getpagesize();
+	real_size = get_size(size + sizeof(t_block));
+	if (real_size <= SMALL)
+		new_size = (size + sizeof(t_block)) * ALLOC + sizeof(t_heap);
 	else
-	{
-		new_size = (alloc_size / page_size + 1) * page_size;
-		if (new_size - alloc_size < sizeof(t_heap))
-			new_size += page_size;
-	}
+		new_size = real_size + sizeof(t_heap);
+	new_size += new_size % page_size;
+	return (new_size);
+}
 
 
+t_heap		*create_heap(size_t size)
+{
+	size_t		new_size;
+	t_heap		*heap;
+
+	new_size = get_heap_size(size);
 	heap = mmap(NULL, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
 	heap->size = new_size;
 	heap->block = NULL;
