@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:14 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 16:18:27 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 12:11:45 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	remove_block(t_heap *heap, void *ptr)
 {
 	t_block	*free_block;
 	t_block *prev_block;
-	// t_block *actual_block;
+	t_block *actual_block;
 
 	prev_block = NULL;
 	free_block = heap->block;
@@ -49,17 +49,18 @@ static void	remove_block(t_heap *heap, void *ptr)
 	// 	prev_block->next = free_block->next;
 	// else
 	// 	heap->block = free_block->next;
-	//defrag
-	// actual_block = prev_block->next;
-	// while (actual_block->next)
-	// {
-	// // free_block->free = true;
-	// 	actual_block -= free_block->size;
-	// 	ft_memcpy(actual_block + sizeof(t_block), actual_block + sizeof(t_block) + free_block->size, actual_block->size - sizeof(t_block));
-	// 	prev_block->next = actual_block;
-	// 	prev_block = actual_block;
-	// 	actual_block = actual_block->next;
-	// }
+	// defrag
+	actual_block = free_block->next;
+	while (actual_block)
+	{
+	// free_block->free = true;
+		prev_block = actual_block->next;
+		ft_memcpy(free_block, actual_block, actual_block->size);
+		actual_block = free_block;
+		free_block += actual_block->size;
+		actual_block->next = (actual_block->next ? free_block : NULL);
+		actual_block = prev_block;
+	}
 }
 
 void	free(void *ptr)

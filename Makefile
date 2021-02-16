@@ -133,7 +133,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -f test* 2> /dev/null || true
 
-re : fclean all
+re : fclean all create
 
 create:
 	@gcc -o test0 tests/test0.c

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 12:12:28 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:15:01 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,39 @@ size_t	get_size(size_t size)
 t_heap	*create_heap(size_t size)
 {
 	t_heap		*heap;
-	size_t		diff;
-	size_t		page_size;
-	size_t		heap_size;
+	// size_t		real_size;
+	// size_t		page_size;
+	// size_t		new_size;
 
-	diff = 0;
-	page_size = (size_t)getpagesize();
-	heap_size = (size + sizeof(t_block));
-	if (heap_size <= SMALL)
-		heap_size = heap_size * ALLOC + sizeof(t_heap);
+	// page_size = (size_t)getpagesize();
+	// real_size = get_size(size + sizeof(t_block));
+	// if (real_size <= SMALL)
+	// 	new_size = (size + sizeof(t_block)) * ALLOC + sizeof(t_heap);
+	// else
+	// 	new_size = real_size + sizeof(t_heap);
+	// new_size += new_size % page_size;
+	size_t	new_size;
+	size_t	page_size;
+	size_t	alloc_size;
+
+	page_size = getpagesize();
+	alloc_size = get_size(size + sizeof(t_block));
+	if (size + sizeof(t_block) <= SMALL)
+	{
+		new_size = (ALLOC/ (page_size / alloc_size) + 1) * page_size;
+		if (new_size - ALLOC* alloc_size < sizeof(t_heap))
+			new_size += page_size;
+	}
 	else
-		heap_size = heap_size + sizeof(t_heap);
-	if ((diff = heap_size % (size_t)page_size) != 0)
-		heap_size += diff;
-	heap = mmap(NULL, heap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-	heap->size = heap_size;
+	{
+		new_size = (alloc_size / page_size + 1) * page_size;
+		if (new_size - alloc_size < sizeof(t_heap))
+			new_size += page_size;
+	}
+
+
+	heap = mmap(NULL, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+	heap->size = new_size;
 	heap->block = NULL;
 	heap->next = NULL;
 	return (heap);

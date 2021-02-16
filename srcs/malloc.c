@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 12:16:05 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:18:55 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*malloc(size_t size)
 	last = heap;
 	while (!allocation && heap)
 	{
-		if (get_size(size) == heap->size)
+		if (get_size(size) - sizeof(t_heap) <= heap->size)
 			allocation = add_block(heap, size);
 		last = heap;
 		heap = heap->next;

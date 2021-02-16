@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:33:07 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 16:17:44 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 12:39:18 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdbool.h>
 
 # define ALLOC 100
-# define TINY 100
-# define SMALL 4096
+# define TINY 128
+# define SMALL 1024
 
 typedef struct			s_block{
 	size_t				size;
