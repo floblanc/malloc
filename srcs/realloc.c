@@ -6,22 +6,11 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:51 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 14:35:32 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 14:49:51 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-
-
-
-
-
-
-
-
-
-#include <stdio.h>
 
 static t_block	*find_block(t_heap *heap, void *ptr)
 {
@@ -40,14 +29,10 @@ void	*realloc(void *ptr, size_t size)
 	t_block	*block;
 
 	// pthread_mutex_lock(&g_mutex);
-	dprintf(1,"WE ARE IN\n");
 	heap = find_memory(ptr);
 	if (!heap)
 		return (NULL);
-	block = ptr - sizeof(t_block);
-	dprintf(2, "%p\n", &block);
 	block = find_block(heap, ptr);
-	dprintf(2, "%p\n", &block);
 	if (1)
 		return(NULL);
 	else

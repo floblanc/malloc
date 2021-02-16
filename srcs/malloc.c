@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 13:46:53 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/16 14:50:09 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*malloc(size_t size)
 	void	*allocation;
 
 
+	return(NULL);
 	pthread_mutex_lock(&g_mutex);
 	allocation = NULL;
 	if (!g_heap)
