@@ -129,6 +129,7 @@ fclean:			clean
 				@printf "$(_RED) '"$(NAME)"' has been deleted. $(_END)🗑️\n"
 				@$(RM) $(DYNAMIC_LIB)
 				@printf "$(_RED) '"$(DYNAMIC_LIB)"' has been deleted. $(_END)🗑️\n"
+				@rm -f test0 test1 test2 test3 test4 test5 test6
 
 norm:
 				@$(NORMINETTE) $(DIR_SRCS)

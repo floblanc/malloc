@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/16 14:28:55 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/17 14:07:39 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-
-size_t	get_size(size_t size)
+size_t get_size(size_t size)
 {
 	if (size <= TINY)
 		return (TINY);
@@ -22,27 +21,26 @@ size_t	get_size(size_t size)
 	return (size);
 }
 
-size_t	get_heap_size(size_t size)
+size_t get_heap_size(size_t size)
 {
-	size_t		real_size;
-	size_t		page_size;
-	size_t		new_size;
+	size_t real_size;
+	size_t page_size;
+	size_t new_size;
 
 	page_size = (size_t)getpagesize();
 	real_size = get_size(size + sizeof(t_block));
 	if (real_size <= SMALL)
-		new_size = (size + sizeof(t_block)) * ALLOC + sizeof(t_heap);
+		new_size = (real_size)*ALLOC + sizeof(t_heap);
 	else
 		new_size = real_size + sizeof(t_heap);
 	new_size += new_size % page_size;
 	return (new_size);
 }
 
-
-t_heap		*create_heap(size_t size)
+t_heap *create_heap(size_t size)
 {
-	size_t		new_size;
-	t_heap		*heap;
+	size_t new_size;
+	t_heap *heap;
 
 	new_size = get_heap_size(size);
 	heap = mmap(NULL, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
@@ -52,10 +50,10 @@ t_heap		*create_heap(size_t size)
 	return (heap);
 }
 
-t_heap		*find_memory(void *allocation)
+t_heap *find_memory(void *allocation)
 {
-	t_heap	*tmp_heap;
-	t_block	*tmp_block;
+	t_heap *tmp_heap;
+	t_block *tmp_block;
 
 	tmp_heap = g_heap;
 	while (tmp_heap)
@@ -63,7 +61,7 @@ t_heap		*find_memory(void *allocation)
 		tmp_block = tmp_heap->block;
 		while (tmp_block)
 		{
-			if ((void*)(tmp_block + sizeof(t_block)) == allocation)
+			if ((void *)(tmp_block + sizeof(t_block)) == allocation)
 				return (tmp_heap);
 			tmp_block = tmp_block->next;
 		}

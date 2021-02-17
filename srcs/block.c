@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   block.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 12:08:11 by floblanc          #+#    #+#             */
-/*   Updated: 2021/02/15 16:27:05 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/17 13:55:25 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-static	t_block *create_block(void *addr, size_t block_size, t_block *next)
+static t_block *create_block(void *addr, size_t block_size, t_block *next)
 {
-	t_block	*block;
+	t_block *block;
 
 	block = addr;
 	block->size = block_size;
@@ -23,42 +23,62 @@ static	t_block *create_block(void *addr, size_t block_size, t_block *next)
 	return (block);
 }
 
-static	t_block	*available_size(t_heap *heap, size_t block_size)
+void *put_in(t_heap *heap, size_t block_size)
 {
-	size_t	size;
-	t_block	*tmp;
+	t_block *tmp;
 
-	tmp = NULL;
-	size = (size_t)(heap->block + sizeof(t_heap));
-	if (heap->block)
+	tmp = heap->block;
+	while (tmp->next)
 	{
-		tmp = heap->block;
-		while (tmp->next)
+		if (tmp->next->free == true)
 		{
-			if (tmp->free && tmp->size >= block_size)
-				return(create_block((void*)size, block_size, tmp->next));
-			size += tmp->size;
-			tmp = tmp->next;
+			// write(STDOUT_FILENO, "Before create_block in while\n", 30);
+			tmp->next = create_block((void *)tmp + tmp->size, block_size, tmp->next);
+			return (tmp->next);
 		}
-		size += tmp->size;
+		tmp = tmp->next;
 	}
-	if (heap->size - size >= block_size)
-		return (tmp->next = create_block((void*)size, block_size, NULL));
-	return (NULL);
+	// write(STDOUT_FILENO, "Before create_block after while\n", 33);
+	tmp->next = create_block((void *)tmp + tmp->size, block_size, NULL);
+	return (tmp->next);
 }
 
-void	*add_block(t_heap *heap, size_t size)
+static bool fit_in(t_heap *heap, size_t block_size)
 {
-	t_block	*block;
+	t_block *tmp;
+	size_t size;
 
-	block = create_block(NULL, size + sizeof(t_block), NULL);
+	size = sizeof(t_heap);
+	tmp = heap->block;
+	while (tmp)
+	{
+		size += tmp->size;
+		tmp = tmp->next;
+	}
+	return (heap->size - size > block_size);
+}
+
+void *add_block(t_heap *heap, size_t size)
+{
+	t_block *block;
+	size_t block_size;
+
+	// write(STDOUT_FILENO, "Before create_block\n", 21);
+	block = NULL;
+	block_size = size + sizeof(t_block);
+	// write(STDOUT_FILENO, "After create_block\n", 20);
 	if (heap->block == NULL)
 	{
-		block = (void *)(heap + sizeof(t_heap));
+		// write(STDOUT_FILENO, "Heap->block == NULL\n", 21);
+		block = create_block((void *)(heap + sizeof(t_heap)), block_size, NULL);
 		heap->block = block;
 	}
 	else
-		block = available_size(heap, block->size);
-	return ((void*)(block + sizeof(t_block)));
-	// return ((void*)block);
+	{
+		if (fit_in(heap, size + sizeof(t_block)))
+			block = put_in(heap, block_size);
+	}
+	if (block == NULL)
+		return (NULL);
+	return ((void *)(block + sizeof(t_block)));
 }
