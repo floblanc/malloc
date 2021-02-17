@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 17:33:46 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 16:13:20 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:19:59 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void *ft_memcpy(void *dest, const void *src, size_t n)
 {
 	unsigned char *str1;
 	unsigned char *str2;
@@ -26,25 +26,21 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-
-void	ft_putnbr(size_t nb)
+void ft_putchar(char c)
 {
-	char	c;
-
-	if (nb < 10)
-	{
-		c = (char)(nb + 48);
-		write(STDOUT_FILENO, &c, 1);
-	}
-	else
-	{
-		ft_putnbr(nb / 10);
-		c = nb % 10;
-		write(STDOUT_FILENO, &c, 1);
-	}
+	write(1, &c, 1);
 }
 
-void	ft_puthexa(size_t nb)
+void ft_putnbr(size_t nb)
+{
+	size_t n;
+
+	n = nb;
+	(n >= 10) ? ft_putnbr(n / 10) : n;
+	ft_putchar(n % 10 + '0');
+}
+
+void ft_puthexa(size_t nb)
 {
 	static char base[17] = "0123456789ABCDEF";
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:29:36 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/15 12:11:51 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:14:10 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-static	size_t	print_block(t_block *block)
+static size_t print_block(t_block *block)
 {
 	write(STDOUT_FILENO, "0x", 3);
 	ft_puthexa((size_t)block + sizeof(t_block));
@@ -21,15 +21,14 @@ static	size_t	print_block(t_block *block)
 	ft_puthexa((size_t)block + block->size);
 	write(STDOUT_FILENO, " : ", 4);
 	ft_putnbr(block->size - sizeof(t_block));
-	write(STDOUT_FILENO, " : ", 4);
 	write(STDOUT_FILENO, " octets\n", 9);
 	return (block->size - sizeof(t_block));
 }
 
-static	size_t	print_mem(t_heap *heap)
+static size_t print_mem(t_heap *heap)
 {
-	t_block	*tmp;
-	size_t	size;
+	t_block *tmp;
+	size_t size;
 
 	size = 0;
 	tmp = heap->block;
@@ -49,10 +48,10 @@ static	size_t	print_mem(t_heap *heap)
 	return (size);
 }
 
-void	show_alloc_mem(void)
+void show_alloc_mem(void)
 {
-	t_heap	*tmp;
-	size_t	total;
+	t_heap *tmp;
+	size_t total;
 
 	total = 0;
 	pthread_mutex_lock(&g_mutex);
@@ -66,5 +65,5 @@ void	show_alloc_mem(void)
 	ft_putnbr(total);
 	write(STDOUT_FILENO, " octets\n", 9);
 	pthread_mutex_unlock(&g_mutex);
-	return ;
+	return;
 }

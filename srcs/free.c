@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:14 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 14:02:24 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/17 18:02:41 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void remove_heap(t_heap *heap)
 
 	prev_heap = NULL;
 	free_heap = g_heap;
-	while (free_heap != heap)
+	while (free_heap && free_heap != heap)
 	{
 		prev_heap = free_heap;
 		free_heap = free_heap->next;
@@ -28,7 +28,7 @@ static void remove_heap(t_heap *heap)
 		prev_heap->next = free_heap->next;
 	else
 		g_heap = free_heap->next;
-	munmap((void *)(heap), heap->size);
+	munmap(heap, heap->size);
 }
 
 static void remove_block(t_heap *heap, void *ptr)
@@ -45,15 +45,9 @@ static void remove_block(t_heap *heap, void *ptr)
 		free_block = free_block->next;
 	}
 	free_block->free = true;
-	// if (prev_block)
-	// 	prev_block->next = free_block->next;
-	// else
-	// 	heap->block = free_block->next;
-	// defrag
 	actual_block = free_block->next;
 	while (actual_block)
 	{
-		// free_block->free = true;
 		prev_block = actual_block->next;
 		ft_memcpy(free_block, actual_block, actual_block->size);
 		actual_block = free_block;
@@ -67,15 +61,16 @@ void free(void *ptr)
 {
 	t_heap *heap;
 
-	pthread_mutex_lock(&g_mutex);
+	// write(STDOUT_FILENO, "Start Free\n", 12);
+	// pthread_mutex_lock(&g_mutex);
 	if (!(heap = find_memory(ptr)))
 	{
-		pthread_mutex_unlock(&g_mutex);
+		// pthread_mutex_unlock(&g_mutex);
 		return;
 	}
 	remove_block(heap, ptr);
 	if (heap->block == NULL)
 		remove_heap(heap);
-	pthread_mutex_unlock(&g_mutex);
+	// pthread_mutex_unlock(&g_mutex);
 	return;
 }

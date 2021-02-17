@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 12:08:11 by floblanc          #+#    #+#             */
-/*   Updated: 2021/02/17 13:55:25 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/17 16:51:45 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void *put_in(t_heap *heap, size_t block_size)
 	t_block *tmp;
 
 	tmp = heap->block;
+	if (tmp->free == true)
+	{
+		tmp = create_block((void *)tmp + tmp->size, block_size, tmp->next);
+		return (tmp);
+	}
 	while (tmp->next)
 	{
 		if (tmp->next->free == true)
