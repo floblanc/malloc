@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 18:02:56 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/17 18:34:07 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void *malloc(size_t size)
 	void *allocation;
 
 	// write(STDOUT_FILENO, "Start Malloc\n", 14);
-	// pthread_mutex_lock(&g_mutex);
+	pthread_mutex_lock(&g_mutex);
 	allocation = NULL;
 	if (!g_heap)
 	{
@@ -58,7 +58,7 @@ void *malloc(size_t size)
 		allocation = add_block(last->next, size);
 		// write(STDOUT_FILENO, "After add_block\n", 17);
 	}
-	// pthread_mutex_unlock(&g_mutex);
+	pthread_mutex_unlock(&g_mutex);
 	// write(STDOUT_FILENO, "End\n", 5);
 	return (allocation);
 }

@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:14 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 18:02:41 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/17 18:34:13 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void free(void *ptr)
 	t_heap *heap;
 
 	// write(STDOUT_FILENO, "Start Free\n", 12);
-	// pthread_mutex_lock(&g_mutex);
+	pthread_mutex_lock(&g_mutex);
 	if (!(heap = find_memory(ptr)))
 	{
 		// pthread_mutex_unlock(&g_mutex);
@@ -71,6 +71,6 @@ void free(void *ptr)
 	remove_block(heap, ptr);
 	if (heap->block == NULL)
 		remove_heap(heap);
-	// pthread_mutex_unlock(&g_mutex);
+	pthread_mutex_unlock(&g_mutex);
 	return;
 }

@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:51 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 18:30:38 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/17 18:34:47 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void *realloc(void *ptr, size_t size)
 
 	heap = find_memory(ptr);
 	if (!heap)
-		return (malloc(size));
+		return (NULL);
 	block = find_block(heap, ptr);
 	if (size == 0)
 	{
