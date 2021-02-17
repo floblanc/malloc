@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 15:00:12 by floblanc         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:45:28 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void *malloc(size_t size)
 	t_heap *last;
 	void *allocation;
 
-	write(STDOUT_FILENO, "Start\n", 7);
+	// write(STDOUT_FILENO, "Start\n", 7);
 	pthread_mutex_lock(&g_mutex);
 	allocation = NULL;
 	if (!g_heap)
