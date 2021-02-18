@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 17:33:46 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:22:25 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 14:41:20 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,19 @@ void	ft_puthexa(size_t nb)
 	{
 		ft_puthexa((nb / 16));
 		write(STDOUT_FILENO, &base[nb % 16], 1);
+	}
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	if (n == 0)
+		return ;
+	i = 0;
+	while (i < n)
+	{
+		((char*)s)[i] = 0;
+		i++;
 	}
 }

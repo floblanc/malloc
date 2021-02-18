@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test6.c                                            :+:      :+:    :+:   */
+/*   test7.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 14:36:37 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 14:36:37 by judumay          ###   ########.fr       */
+/*   Created: 2021/02/18 14:44:28 by judumay           #+#    #+#             */
+/*   Updated: 2021/02/18 14:54:35 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 
 int	main(void)
 {
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 16);
-	malloc(1024 * 1024 * 128);
-	show_alloc_mem();
+	int	i;
+	int	*pointer;
+
+	pointer = (int *)calloc(10, sizeof(int));
+	if (!pointer)
+		return (0);
+	i = -1;
+	while (++i < 9)
+		pointer[i] = i;
+	i = -1;
+	while (++i < 10)
+		printf("%d ", pointer[i]);
+	printf("\n");
+	free(pointer);
 	return (0);
 }

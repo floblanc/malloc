@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:33:07 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:28:12 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 14:41:26 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ size_t				ft_strlen(const char *str);
 void				ft_putnbr(size_t nb);
 void				ft_puthexa(size_t nb);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
+void				ft_bzero(void *s, size_t n);
 
 #endif

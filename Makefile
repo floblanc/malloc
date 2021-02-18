@@ -96,6 +96,7 @@ SRC_NAME =				malloc.c					\
 						utils.c						\
 						block.c						\
 						realloc.c					\
+						calloc.c					\
 
 SRC_PATH =				./srcs/
 
@@ -113,33 +114,66 @@ DYNAMIC_LIB =	libft_malloc_$(HOSTTYPE).so
 
 all: $(NAME)
 
-$(NAME) : $(DYNAMIC_LIB)
-			@ln -sf $(DYNAMIC_LIB) $(NAME)
+$(NAME) : $(DYNAMIC_LIB) $(OBJ)
+	@echo "\n$(_WHITE)====================================================$(_END)"
+	@echo "$(_YELLOW)	COMPILING AND LINKING $(NAME)$(_END)"
+	@echo "$(_WHITE)====================================================$(_END)"
+	@ln -sf $(DYNAMIC_LIB) $(NAME)
+	@echo "\n$(_WHITE)$(_BOLD)$@\t$(_END)$(_GREEN)[OK]\n$(_END)"
 
 $(DYNAMIC_LIB) : $(OBJ)
-		@$(CC) $(CC_FLAGS) $(OBJ) -shared -o $(DYNAMIC_LIB)
+	@$(CC) $(CC_FLAGS) $(OBJ) -shared -o $(DYNAMIC_LIB)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INCLUDE)
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) -I $(INC_PATH) -c $< -o $@
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\t$<"
 
 clean:
 	@rm -rf $(OBJ_PATH) 2> /dev/null || true
-	@rm -rf $(DYNAMIC_LIB) 2> /dev/null || true
+	@echo "$(_YELLOW)Remove :\t$(_RED)" $(OBJ_PATH)"$(_END)"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "$(_YELLOW)Remove :\t$(_RED)" $(NAME)"$(_END)"
+	@rm -rf $(DYNAMIC_LIB) 2> /dev/null || true
+	@echo "$(_YELLOW)Remove :\t$(_RED)" $(DYNAMIC_LIB)"$(_END)"
+
 	@rm -f test* 2> /dev/null || true
+	@echo "$(_YELLOW)Remove :\t$(_RED)" All tests binaries"$(_END)"
+
 
 re : fclean all create
 
 create:
-	@gcc -o test0 tests/test0.c
-	@gcc -o test1 tests/test1.c
-	@gcc -o test2 tests/test2.c
-	@gcc -o test3 tests/test3.c
-	@gcc -o test4 tests/test4.c
-	@gcc -o test5 tests/test5.c
-	@gcc -o test6 tests/test6.c -L. -lft_malloc
+	@echo "\n$(_WHITE)====================================================$(_END)"
+	@echo "$(_YELLOW)		COMPILING Tests Files$(_END)"
+	@echo "$(_WHITE)====================================================$(_END)"
+
+	@gcc -o test0 tests/test0.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest0"
+	@gcc -o test1 tests/test1.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest1"
+	@gcc -o test2 tests/test2.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest2"
+	@gcc -o test3 tests/test3.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest3"
+	@gcc -o test4 tests/test4.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest4"
+	@gcc -o test5 tests/test5.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest5"
+	@gcc -o test6 tests/test6.c -L. -lft_malloc > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest6"
+	@gcc -o test7 tests/test7.c > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest7"
 
 .PHONY :	all clean fclean re create

@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test6.c                                            :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 14:36:37 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 14:36:37 by judumay          ###   ########.fr       */
+/*   Created: 2021/02/18 14:37:30 by judumay           #+#    #+#             */
+/*   Updated: 2021/02/18 14:55:07 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/malloc.h"
 
-int	main(void)
+void	*calloc(size_t nmemb, size_t size)
 {
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 16);
-	malloc(1024 * 1024 * 128);
-	show_alloc_mem();
-	return (0);
+	void	*first_ptr;
+	void	*ptr;
+
+	ptr = NULL;
+	while (nmemb > 0)
+	{
+		if (ptr == NULL)
+		{
+			if (!(ptr = malloc(size)))
+				return (NULL);
+			first_ptr = ptr;
+		}
+		else
+		{
+			if (!(ptr = malloc(size)))
+				return (NULL);
+		}
+		ft_bzero(ptr, size);
+		nmemb--;
+	}
+	return (first_ptr);
 }
