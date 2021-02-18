@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:51 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:23:24 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:14:30 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void			*realloc(void *ptr, size_t size)
 	pthread_mutex_lock(&g_mutex);
 	heap = find_memory(ptr);
 	if (!heap)
+	{
+		pthread_mutex_unlock(&g_mutex);
 		return (NULL);
+	}
 	block = find_block(heap, ptr);
 	new_ptr = realloc_n(ptr, size, block);
 	pthread_mutex_unlock(&g_mutex);
