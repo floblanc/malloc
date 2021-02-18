@@ -6,16 +6,16 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:14 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 18:34:13 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 13:26:11 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-static void remove_heap(t_heap *heap)
+static void	remove_heap(t_heap *heap)
 {
-	t_heap *free_heap;
-	t_heap *prev_heap;
+	t_heap	*free_heap;
+	t_heap	*prev_heap;
 
 	prev_heap = NULL;
 	free_heap = g_heap;
@@ -31,11 +31,11 @@ static void remove_heap(t_heap *heap)
 	munmap(heap, heap->size);
 }
 
-static void remove_block(t_heap *heap, void *ptr)
+static void	remove_block(t_heap *heap, void *ptr)
 {
-	t_block *free_block;
-	t_block *prev_block;
-	t_block *actual_block;
+	t_block	*free_block;
+	t_block	*prev_block;
+	t_block	*actual_block;
 
 	prev_block = NULL;
 	free_block = heap->block;
@@ -57,20 +57,19 @@ static void remove_block(t_heap *heap, void *ptr)
 	}
 }
 
-void free(void *ptr)
+void		free(void *ptr)
 {
-	t_heap *heap;
+	t_heap	*heap;
 
-	// write(STDOUT_FILENO, "Start Free\n", 12);
 	pthread_mutex_lock(&g_mutex);
 	if (!(heap = find_memory(ptr)))
 	{
-		// pthread_mutex_unlock(&g_mutex);
-		return;
+		pthread_mutex_unlock(&g_mutex);
+		return ;
 	}
 	remove_block(heap, ptr);
 	if (heap->block == NULL)
 		remove_heap(heap);
 	pthread_mutex_unlock(&g_mutex);
-	return;
+	return ;
 }

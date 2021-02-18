@@ -6,15 +6,15 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:51 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/17 18:34:47 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 13:23:24 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-static t_block *find_block(t_heap *heap, void *ptr)
+static t_block	*find_block(t_heap *heap, void *ptr)
 {
-	t_block *tmp;
+	t_block	*tmp;
 
 	tmp = heap->block;
 	while ((void *)(tmp + sizeof(t_block)) != ptr)
@@ -22,16 +22,10 @@ static t_block *find_block(t_heap *heap, void *ptr)
 	return (tmp);
 }
 
-void *realloc(void *ptr, size_t size)
+static void		*realloc_n(void *ptr, size_t size, t_block *block)
 {
-	void *new_ptr;
-	t_heap *heap;
-	t_block *block;
+	void	*new_ptr;
 
-	heap = find_memory(ptr);
-	if (!heap)
-		return (NULL);
-	block = find_block(heap, ptr);
 	if (size == 0)
 	{
 		free(ptr);
@@ -52,4 +46,20 @@ void *realloc(void *ptr, size_t size)
 		free(ptr);
 		return (new_ptr);
 	}
+}
+
+void			*realloc(void *ptr, size_t size)
+{
+	t_heap	*heap;
+	t_block	*block;
+	void	*new_ptr;
+
+	pthread_mutex_lock(&g_mutex);
+	heap = find_memory(ptr);
+	if (!heap)
+		return (NULL);
+	block = find_block(heap, ptr);
+	new_ptr = realloc_n(ptr, size, block);
+	pthread_mutex_unlock(&g_mutex);
+	return (new_ptr);
 }
