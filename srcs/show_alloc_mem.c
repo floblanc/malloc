@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:29:36 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:30:13 by judumay          ###   ########.fr       */
+/*   Updated: 2021/02/18 13:41:14 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static size_t	print_mem(t_heap *heap)
 
 	size = 0;
 	tmp = heap->block;
-	if (heap->size <= TINY)
+	if (heap->block->size <= TINY + sizeof(t_block))
 		write(STDOUT_FILENO, "TINY : 0x", 10);
-	else if (heap->size <= SMALL)
+	else if (heap->block->size <= SMALL + sizeof(t_block))
 		write(STDOUT_FILENO, "SMALL : 0x", 10);
 	else
 		write(STDOUT_FILENO, "LARGE : 0x", 10);
-	ft_puthexa((size_t)heap + sizeof(t_heap));
+	ft_puthexa((size_t)(heap + sizeof(t_heap)));
 	write(STDOUT_FILENO, "\n", 2);
 	while (tmp)
 	{
