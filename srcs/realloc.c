@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:51 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 15:14:30 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:11:05 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_block	*find_block(t_heap *heap, void *ptr)
 	return (tmp);
 }
 
-static void		*realloc_n(void *ptr, size_t size, t_block *block)
+static void	*realloc_n(void *ptr, size_t size, t_block *block)
 {
 	void	*new_ptr;
 
@@ -38,7 +38,8 @@ static void		*realloc_n(void *ptr, size_t size, t_block *block)
 	}
 	else
 	{
-		if (!(new_ptr = malloc(size)))
+		new_ptr = malloc(size);
+		if (!new_ptr)
 			return (ptr);
 		if (block->size - sizeof(t_block) <= size)
 			size = block->size - sizeof(t_block);
@@ -48,7 +49,7 @@ static void		*realloc_n(void *ptr, size_t size, t_block *block)
 	}
 }
 
-void			*realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	t_heap	*heap;
 	t_block	*block;

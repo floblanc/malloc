@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:30:14 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:26:11 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:08:39 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,21 @@ static void	remove_block(t_heap *heap, void *ptr)
 		ft_memcpy(free_block, actual_block, actual_block->size);
 		actual_block = free_block;
 		free_block += actual_block->size;
-		actual_block->next = (actual_block->next ? free_block : NULL);
+		if (actual_block->next)
+			actual_block->next = free_block;
+		else
+			actual_block->next = NULL;
 		actual_block = prev_block;
 	}
 }
 
-void		free(void *ptr)
+void	free(void *ptr)
 {
 	t_heap	*heap;
 
 	pthread_mutex_lock(&g_mutex);
-	if (!(heap = find_memory(ptr)))
+	heap = find_memory(ptr);
+	if (!heap)
 	{
 		pthread_mutex_unlock(&g_mutex);
 		return ;

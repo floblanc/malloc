@@ -6,14 +6,14 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 15:13:40 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:10:18 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
-t_heap *g_heap = NULL;
+pthread_mutex_t	g_mutex = PTHREAD_MUTEX_INITIALIZER;
+t_heap			*g_heap = NULL;
 
 static void	*alloc(t_heap *heap, t_heap *last, void *allocation, size_t size)
 {
@@ -32,7 +32,7 @@ static void	*alloc(t_heap *heap, t_heap *last, void *allocation, size_t size)
 	return (allocation);
 }
 
-void		*malloc(size_t size)
+void	*malloc(size_t size)
 {
 	t_heap	*heap;
 	t_heap	*last;
@@ -40,10 +40,14 @@ void		*malloc(size_t size)
 
 	pthread_mutex_lock(&g_mutex);
 	allocation = NULL;
-	if (!g_heap && !(g_heap = create_heap(size)))
+	if (!g_heap)
 	{
-		pthread_mutex_unlock(&g_mutex);
-		return (NULL);
+		g_heap = create_heap(size);
+		if (!g_heap)
+		{
+			pthread_mutex_unlock(&g_mutex);
+			return (NULL);
+		}
 	}
 	heap = g_heap;
 	last = heap;

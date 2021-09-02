@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:21:57 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/11 15:25:52 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:13:01 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print(char *s)
 	write(1, s, strlen(s));
 }
 
-int		main(void)
+int	main(void)
 {
 	char	*addr1;
 	char	*addr3;

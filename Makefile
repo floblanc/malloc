@@ -172,6 +172,9 @@ create:
 	@gcc -o test6 tests/test6.c -L. -lft_malloc > /dev/null 2>&1
 	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
 		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest6"
+	@gcc -o test6_bis tests/test6_bis.c -L. -lft_malloc > /dev/null 2>&1
+	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
+		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest6_bis"
 	@gcc -o test7 tests/test7.c > /dev/null 2>&1
 	@echo "$(_END)$(_GREEN)[OK]\t$(_UNDER)$(_YELLOW)\t"	\
 		"COMPILE :$(_END)$(_BOLD)$(_WHITE)\ttest7"

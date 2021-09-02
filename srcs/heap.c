@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:48:25 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:29:27 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:08:50 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_heap	*create_heap(size_t size)
 
 	new_size = get_heap_size(size);
 	heap = mmap(NULL, new_size,
-		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+			PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
 	heap->size = new_size;
 	heap->block = NULL;
 	heap->next = NULL;

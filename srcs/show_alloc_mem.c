@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:29:36 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 13:41:14 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:11:16 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static size_t	print_mem(t_heap *heap)
 	return (size);
 }
 
-void			show_alloc_mem(void)
+void	show_alloc_mem(void)
 {
 	t_heap	*tmp;
 	size_t	total;

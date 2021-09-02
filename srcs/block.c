@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 12:08:11 by floblanc          #+#    #+#             */
-/*   Updated: 2021/02/18 13:29:01 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:04:01 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_block	*create_block(void *addr, size_t block_size, t_block *next)
 	return (block);
 }
 
-void			*put_in(t_heap *heap, size_t block_size)
+void	*put_in(t_heap *heap, size_t block_size)
 {
 	t_block	*tmp;
 
@@ -38,7 +38,7 @@ void			*put_in(t_heap *heap, size_t block_size)
 		if (tmp->next->free == true)
 		{
 			tmp->next = create_block((void *)tmp + tmp->size,
-				block_size, tmp->next);
+					block_size, tmp->next);
 			return (tmp->next);
 		}
 		tmp = tmp->next;
@@ -47,7 +47,7 @@ void			*put_in(t_heap *heap, size_t block_size)
 	return (tmp->next);
 }
 
-static bool		fit_in(t_heap *heap, size_t block_size)
+static bool	fit_in(t_heap *heap, size_t block_size)
 {
 	t_block		*tmp;
 	size_t		size;
@@ -62,7 +62,7 @@ static bool		fit_in(t_heap *heap, size_t block_size)
 	return (heap->size - size > block_size);
 }
 
-void			*add_block(t_heap *heap, size_t size)
+void	*add_block(t_heap *heap, size_t size)
 {
 	t_block	*block;
 	size_t	block_size;

@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:37:30 by judumay           #+#    #+#             */
-/*   Updated: 2021/02/18 15:38:18 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/02 18:06:02 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	*return_calloc(void *ptr, size_t size)
 {
-	if (!(ptr = malloc(size)))
+	ptr = malloc(size);
+	if (!ptr)
 	{
 		pthread_mutex_unlock(&g_mutex);
 		return (NULL);
@@ -22,7 +23,7 @@ static void	*return_calloc(void *ptr, size_t size)
 	return (ptr);
 }
 
-void		*calloc(size_t nmemb, size_t size)
+void	*calloc(size_t nmemb, size_t size)
 {
 	void	*first_ptr;
 	void	*ptr;
@@ -33,13 +34,15 @@ void		*calloc(size_t nmemb, size_t size)
 	{
 		if (ptr == NULL)
 		{
-			if (!(ptr = return_calloc(ptr, size)))
+			ptr = return_calloc(ptr, size);
+			if (!ptr)
 				return (NULL);
 			first_ptr = ptr;
 		}
 		else
 		{
-			if (!(ptr = return_calloc(ptr, size)))
+			ptr = return_calloc(ptr, size);
+			if (!ptr)
 				return (NULL);
 		}
 		ft_bzero(ptr, size);
