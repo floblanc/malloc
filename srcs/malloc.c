@@ -6,7 +6,7 @@
 /*   By: judumay <judumay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 15:31:40 by judumay           #+#    #+#             */
-/*   Updated: 2021/09/02 18:10:18 by judumay          ###   ########.fr       */
+/*   Updated: 2021/09/03 11:31:59 by judumay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,13 @@ void	*malloc(size_t size)
 	pthread_mutex_lock(&g_mutex);
 	allocation = NULL;
 	if (!g_heap)
-	{
 		g_heap = create_heap(size);
-		if (!g_heap)
-		{
-			pthread_mutex_unlock(&g_mutex);
-			return (NULL);
-		}
+	if (g_heap)
+	{
+		heap = g_heap;
+		last = heap;
+		allocation = alloc(heap, last, allocation, size);
 	}
-	heap = g_heap;
-	last = heap;
-	allocation = alloc(heap, last, allocation, size);
 	pthread_mutex_unlock(&g_mutex);
 	return (allocation);
 }

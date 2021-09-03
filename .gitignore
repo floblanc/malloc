@@ -5,8 +5,9 @@ test3
 test4
 test5
 test6
-test6_bis.c
+test6_bis
 test7
 **/**.o
 **/**.so
-
+run_linux.sh
+run.sh

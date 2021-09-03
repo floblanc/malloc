@@ -1,5 +1,4 @@
 #!/bin/sh
-# make re -s > /dev/null 2>&1
 
 malloc()
 {
@@ -9,8 +8,8 @@ malloc()
 	i=0
 	while [ $i -lt $it ]
 	do
-		test0=`./run_linux.sh /usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
-		test1=`./run_linux.sh /usr/bin/time -v ./test1 2>&1 | grep "Minor" | cut -d " " -f7`
+		test0=`./run.sh /usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
+		test1=`./run.sh /usr/bin/time -v ./test1 2>&1 | grep "Minor" | cut -d " " -f7`
 		ret=`echo "$test1 - $test0" | bc`
 		if [ $ret -gt 254 -a $ret -lt 273 ]
 		then
@@ -33,8 +32,8 @@ free()
 	while [ $i -lt $it ]
 	do
 
-		test1=`./run_linux.sh /usr/bin/time -v ./test1 2>&1 | grep "Minor" | cut -d " " -f7`
-		test2=`./run_linux.sh /usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
+		test1=`./run.sh /usr/bin/time -v ./test1 2>&1 | grep "Minor" | cut -d " " -f7`
+		test2=`./run.sh /usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
 		ret=`echo "$test1 - $test2" | bc`
 		if [ $ret -ge 0 ]
 		then
@@ -58,8 +57,8 @@ free_quality()
 	do
 		real_test0=`/usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
 		real_test2=`/usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
-		test0=`./run_linux.sh /usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
-		test2=`./run_linux.sh /usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
+		test0=`./run.sh /usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
+		test2=`./run.sh /usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
 		real_ret=`echo "$real_test2 - $real_test0"| bc`
 		ret=`echo "$test2 - $test0" | bc`
 		if [ $real_ret -ge $ret ]
@@ -77,7 +76,7 @@ free_quality()
 realloc()
 {
 	echo "\nRealloc test:\n"
-	./run_linux.sh ./test3 > realloc_test
+	./run.sh ./test3 > realloc_test
 	test3=`cat -e realloc_test`
 	printf "Bonjour\nBonjour\n" > real_realloc_test
 	result=`cat -e real_realloc_test`
@@ -93,7 +92,7 @@ realloc()
 realloc_more()
 {
 	echo "\nRealloc++ test:\n"
-	./run_linux.sh ./test4 > realloc_more_test
+	./run.sh ./test4 > realloc_more_test
 	test4=`cat -e realloc_more_test`
 	printf "Bonjour\nBonjour\n" > real_realloc_more_test
 	result=`cat -e real_realloc_more_test`
@@ -109,7 +108,7 @@ realloc_more()
 error()
 {
 	echo "\nError Management++ test:\n"
-	./run_linux.sh ./test5 > error_management_test
+	./run.sh ./test5 > error_management_test
 	test5=`cat -e error_management_test`
 	printf "Bonjour\n" > real_error_management_test
 	result=`cat -e real_error_management_test`
@@ -125,15 +124,15 @@ error()
 show_alloc_mem()
 {
 	echo "\nShow_alloc_mem test:\n"
-	./run_linux.sh ./test6
+	./run.sh ./test6
 	echo "\nWith Tiny displayed\n"
-	./run_linux.sh ./test6_bis
+	./run.sh ./test6_bis
 }
 
 calloc()
 {
 	echo "\nCalloc test:\n"
-	test7=`./run_linux.sh ./test7`
+	test7=`./run.sh ./test7`
 	result=`./test7`
 	echo "Real: $result\nMine: $test7"
 	if [ "$test7" = "$result" ]
@@ -144,6 +143,7 @@ calloc()
 	fi
 }
 
+make re -s > /dev/null 2>&1
 while :
 do :
 	clear

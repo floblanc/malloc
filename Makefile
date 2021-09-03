@@ -120,6 +120,7 @@ $(NAME) : $(DYNAMIC_LIB) $(OBJ)
 	@echo "$(_WHITE)====================================================$(_END)"
 	@ln -sf $(DYNAMIC_LIB) $(NAME)
 	@echo "\n$(_WHITE)$(_BOLD)$@\t$(_END)$(_GREEN)[OK]\n$(_END)"
+	@cp sh/run_linux.sh run.sh
 
 $(DYNAMIC_LIB) : $(OBJ)
 	@$(CC) $(CC_FLAGS) $(OBJ) -shared -o $(DYNAMIC_LIB)
