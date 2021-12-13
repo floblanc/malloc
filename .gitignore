@@ -11,3 +11,4 @@ test7
 **/**.so
 run_linux.sh
 run.sh
+.vscode
