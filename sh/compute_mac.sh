@@ -169,7 +169,7 @@ do :
 			malloc
 			read -p "Press space to continue" CONTINUE
 			;;
-		"free_quality")
+		"free")
 			free
 			;;
 		"free_quality")
