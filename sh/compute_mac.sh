@@ -8,8 +8,8 @@ malloc()
 	i=0
 	while [ $i -lt $it ]
 	do
-		test0=`./run.sh /usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f8`
-		test1=`./run.sh /usr/bin/time -l ./test1 2>&1 | grep "page reclaims" | cut -d " " -f8`
+		test0=`./run.sh /usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f18`
+		test1=`./run.sh /usr/bin/time -l ./test1 2>&1 | grep "page reclaims" | cut -d " " -f18`
 		ret=`echo "$test1 - $test0" | bc`
 		if [ $ret -gt 254 -a $ret -lt 273 ]
 		then
@@ -32,8 +32,8 @@ free()
 	while [ $i -lt $it ]
 	do
 
-		test1=`./run.sh /usr/bin/time -l ./test1 2>&1 | grep "page reclaims" | cut -d " " -f8`
-		test2=`./run.sh /usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f8`
+		test1=`./run.sh /usr/bin/time -l ./test1 2>&1 | grep "page reclaims" | cut -d " " -f18`
+		test2=`./run.sh /usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f18`
 		ret=`echo "$test1 - $test2" | bc`
 		if [ $ret -ge 0 ]
 		then
@@ -55,10 +55,10 @@ free_quality()
 	i=0
 	while [ $i -lt $it ]
 	do
-		real_test0=`/usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f8`
-		real_test2=`/usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f8`
-		test0=`./run.sh /usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f8`
-		test2=`./run.sh /usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f8`
+		real_test0=`/usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f18`
+		real_test2=`/usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f18`
+		test0=`./run.sh /usr/bin/time -l ./test0 2>&1 | grep "page reclaims" | cut -d " " -f18`
+		test2=`./run.sh /usr/bin/time -l ./test2 2>&1 | grep "page reclaims" | cut -d " " -f18`
 		real_ret=`echo "$real_test2 - $real_test0"| bc`
 		ret=`echo "$test2 - $test0" | bc`
 		if [ $real_ret -ge $ret ]
@@ -163,38 +163,38 @@ do :
 			sleep 1
 			show_alloc_mem
 			calloc
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"malloc")
 			malloc
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
-		"free")
+		"free_quality")
 			free
 			;;
 		"free_quality")
 			free_quality
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"realloc")
 			realloc
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"realloc_more")
 			realloc_more
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"error")
 			error
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"show_alloc_mem")
 			show_alloc_mem
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 		"calloc")
 			calloc
-			read -p "Press enter to continue" CONTINUE
+			read -p "Press space to continue" CONTINUE
 			;;
 	esac
 done

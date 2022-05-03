@@ -55,18 +55,17 @@ free_quality()
 	i=0
 	while [ $i -lt $it ]
 	do
-		# real_test0=`/usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
-		# real_test2=`/usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
+		real_test0=`/usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
+		real_test2=`/usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
 		test0=`./run.sh /usr/bin/time -v ./test0 2>&1 | grep "Minor" | cut -d " " -f7`
 		test2=`./run.sh /usr/bin/time -v ./test2 2>&1 | grep "Minor" | cut -d " " -f7`
-		# real_ret=`echo "$real_test2 - $real_test0"| bc`
+		real_ret=`echo "$real_test2 - $real_test0"| bc`
 		ret=`echo "$test2 - $test0" | bc`
-		if [ $ret -ge $ret ]
+		if [ $real_ret -ge $ret ]
 		then
 			j=$(($j + 1))
 		else
-			# echo "\nReal: $real_ret\nMine: $ret"
-			echo "\n$ret"
+			echo "\nReal: $real_ret\nMine: $ret"
 		fi
 		printf "\rValid : $j/$it"
 		i=$(($i + 1))
@@ -144,7 +143,7 @@ calloc()
 	fi
 }
 
-# make re -s > /dev/null 2>&1
+make re -s > /dev/null 2>&1
 while :
 do :
 	clear
@@ -170,7 +169,7 @@ do :
 			malloc
 			read -p "Press space to continue" CONTINUE
 			;;
-		"free")
+		"free_quality")
 			free
 			;;
 		"free_quality")
